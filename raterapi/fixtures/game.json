@@ -1,0 +1,43 @@
+[
+    {
+        "model": "raterapi.game",
+        "pk": 1,
+        "fields": {
+            "ages": "5+",
+            "description": "It's Catan",
+            "est_time": "1 hour",
+            "maker": "Klaus Teuber",
+            "number_of_players": 4,
+            "title": "Settlers of Catan",
+            "year": 2001
+        }
+    },
+    {
+        "model": "raterapi.game",
+        "pk": 2,
+        "fields": {
+            "ages": "7+",
+            "description": "Run around in the park!",
+            "est_time": "1 hour",
+            "maker": "Kids",
+            "number_of_players": 2,
+            "title": "Harry Parker",
+            "year": 2003
+        }
+    },
+    {
+        "model": "raterapi.game",
+        "pk": 3,
+        "fields": {
+            "ages": "65+",
+            "description": "Not intended for fun",
+            "est_time": "30 minutes",
+            "maker": "Father Time",
+            "number_of_players": 4,
+            "title": "Bingo",
+            "year": 1078
+        }
+    }
+]
+
+   
