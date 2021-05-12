@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:rater}/db.sqlite3",
+            "name": "rater db"
+        }
+    ],
+    "python.pythonPath": "/Users/calebjames/.local/share/virtualenvs/rater-xWSl4y_n/bin/python"
+}
