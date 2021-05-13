@@ -1,3 +1,4 @@
+from raterapi.models import category
 from django.db import models
 
 
@@ -10,3 +11,6 @@ class Game(models.Model):
     number_of_players = models.IntegerField()
     title = models.CharField(max_length=30)
     year = models.IntegerField()
+
+    # Related join tables
+    categories = models.ManyToManyField("Category", through = "CategoryGame")

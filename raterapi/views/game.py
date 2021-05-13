@@ -5,7 +5,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from raterapi.models import Game, Gamer
+from raterapi.models import Game, Gamer, Category
 from django.contrib.auth.models import User
 
 
@@ -15,8 +15,11 @@ class GameViewSet(ViewSet):
     def retrieve(self, request, pk=None):
         try:
             game = Game.objects.get(pk=pk)
+            # categories = Category.objects.filter(categorygame__)
+            
             serializer = GameSerializer(game, context={'request': request})
             return Response(serializer.data)
+        
         except Exception as ex:
             return HttpResponseServerError(ex)
     
@@ -24,6 +27,8 @@ class GameViewSet(ViewSet):
     # Get a list of all records
     def list(self, request):
         games = Game.objects.all()
+        
+
         serializer = GameSerializer(
             games, many=True, context={'request': request})
         return Response(serializer.data)
@@ -40,9 +45,7 @@ class GameViewSet(ViewSet):
         # Uses the token passed in the `Authorization` header
         gamer = Gamer.objects.get(user=request.auth.user)
 
-        # Create a new Python instance of the Game class
-        # and set its properties from what was sent in the
-        # body of the request from the client.
+        
         game = Game()
         game.ages = request.data["ages"]
         game.description = request.data["description"]
@@ -133,5 +136,5 @@ class UserSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):   
     class Meta:
         model = Game
-        fields = ('id', 'ages', 'description', 'est_time', 'maker', 'number_of_players', 'title', 'year')
+        fields = ('id', 'ages', 'description', 'est_time', 'maker', 'number_of_players', 'title', 'year', 'categories')
         depth = 1
