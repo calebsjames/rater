@@ -56,29 +56,19 @@ class GameViewSet(ViewSet):
         game.year = request.data["year"]
         
 
-        # Use the Django ORM to get the record from the database
-        # whose `id` is what the client passed as the
-        # `gameTypeId` in the body of the request.
-        # gametype = GameType.objects.get(pk=request.data["gameTypeId"])
-        # game.gametype = gametype
-
-        # Try to save the new game to the database, then
-        # serialize the game instance as JSON, and send the
-        # JSON as a response to the client request
         try:
             game.save()
+            categories = Category.objects.in_bulk(request.data["categories"])
+            game.categories.set(categories)
             serializer = GameSerializer(game, context={'request': request})
             return Response(serializer.data)
 
-        # If anything went wrong, catch the exception and
-        # send a response with a 400 status code to tell the
-        # client that something was wrong with its request data
         except ValidationError as ex:
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
     
     
 
-
+    # Edit a record via PUT method
     def update(self, request, pk=None):
         """Handle PUT requests for a game
 
@@ -86,10 +76,6 @@ class GameViewSet(ViewSet):
             Response -- Empty body with 204 status code
         """
         gamer = Gamer.objects.get(user=request.auth.user)
-
-        # Do mostly the same thing as POST, but instead of
-        # creating a new instance of Game, get the game record
-        # from the database whose primary key is `pk`
         game = Game.objects.get(pk=pk)
         game.ages = request.data["ages"]
         game.description = request.data["description"]
@@ -103,15 +89,11 @@ class GameViewSet(ViewSet):
         game.categories.set(categories)
 
         game.save()
-        # gametype = GameType.objects.get(pk=request.data["gameTypeId"])
-        # game.gametype = gametype
-
-
-        # 204 status code means everything worked but the
-        # server is not sending back any data in the response
+    
         return Response({}, status=status.HTTP_204_NO_CONTENT)
    
 
+    # DELETE a single record 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single game
 
