@@ -98,10 +98,14 @@ class GameViewSet(ViewSet):
         game.number_of_players = request.data["number_of_players"]
         game.title = request.data["title"]
         game.year = request.data["year"]
+        
+        categories = Category.objects.in_bulk(request.data["categories"])
+        game.categories.set(categories)
 
+        game.save()
         # gametype = GameType.objects.get(pk=request.data["gameTypeId"])
         # game.gametype = gametype
-        game.save()
+
 
         # 204 status code means everything worked but the
         # server is not sending back any data in the response
